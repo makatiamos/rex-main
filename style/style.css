@@ -51,7 +51,7 @@ body.has-activeNavPages {
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-container {
@@ -59,9 +59,9 @@ body.has-activeNavPages {
 }
 
 .header-top-bar {
-    background: rgba(0,0,0,0.2);
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 6px 0; /* slightly reduced */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .top-links {
@@ -90,11 +90,12 @@ body.has-activeNavPages {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: 10px 0; /* reduced padding */
 }
 
+/* Logo */
 .header-logo img {
-    height: 50px;
+    height: 40px; /* slightly smaller */
     width: auto;
 }
 
@@ -104,7 +105,7 @@ body.has-activeNavPages {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     z-index: 101;
 }
 
@@ -149,7 +150,7 @@ body.has-activeNavPages {
     border: none;
     color: #fff;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     border-radius: 6px;
     transition: all 0.3s ease;
     text-decoration: none;
@@ -159,7 +160,7 @@ body.has-activeNavPages {
 }
 
 .navUser-action:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: #ffd700;
 }
 
@@ -183,7 +184,7 @@ body.has-activeNavPages {
     right: 0;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     padding: 10px 0;
     min-width: 150px;
     opacity: 0;
@@ -229,8 +230,8 @@ body.has-activeNavPages {
 
 /* Main Navigation */
 .navPages-container {
-    background: rgba(0,0,0,0.1);
-    border-top: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navPages-list {
@@ -241,7 +242,7 @@ body.has-activeNavPages {
 
 .navPages-list--desktop {
     justify-content: center;
-    gap: 30px;
+    gap: 20px; /* reduced gap */
 }
 
 .navPages-action {
@@ -250,7 +251,7 @@ body.has-activeNavPages {
     font-weight: 600;
     font-size: 14px;
     letter-spacing: 0.5px;
-    padding: 20px 0;
+    padding: 10px 0; /* reduced vertical padding */
     display: flex;
     align-items: center;
     transition: all 0.3s ease;
@@ -275,6 +276,12 @@ body.has-activeNavPages {
     transform: rotate(180deg);
 }
 
+/* Remove unwanted menu items via CSS */
+.navPages-list--desktop li[data-remove],
+.navPages-list--mobile li[data-remove] {
+    display: none;
+}
+
 /* Submenus */
 .navPage-subMenu {
     position: absolute;
@@ -282,8 +289,8 @@ body.has-activeNavPages {
     left: 0;
     right: 0;
     background: #fff;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    padding: 40px 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    padding: 30px 0; /* slightly reduced */
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);
@@ -300,7 +307,7 @@ body.has-activeNavPages {
 .navPage-subMenu--shop {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 40px;
+    gap: 30px; /* reduced gap */
     max-width: 1200px;
     margin: 0 auto;
     padding-left: 20px;
@@ -310,7 +317,7 @@ body.has-activeNavPages {
 .navPage-subMenu--donate {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 40px;
+    gap: 30px; /* reduced gap */
     max-width: 1200px;
     margin: 0 auto;
     padding-left: 20px;
@@ -381,7 +388,8 @@ body.has-activeNavPages {
 }
 
 /* Buttons */
-.button {
+.button,
+.btn {
     background: linear-gradient(135deg, #1a472a, #2d5a3d);
     color: #fff;
     border: none;
@@ -395,7 +403,8 @@ body.has-activeNavPages {
     text-align: center;
 }
 
-.button:hover {
+.button:hover,
+.btn:hover {
     background: linear-gradient(135deg, #2d5a3d, #1a472a);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(26, 71, 42, 0.3);
@@ -405,6 +414,20 @@ body.has-activeNavPages {
 .button--small {
     padding: 8px 16px;
     font-size: 14px;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: #fff;
+    color: #1a472a;
+    border: 2px solid #1a472a;
+}
+
+.btn-secondary:hover {
+    background: #1a472a;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 71, 42, 0.3);
 }
 
 /* Search Dropdown */
@@ -691,21 +714,299 @@ body.has-activeNavPages {
     margin-top: auto;
 }
 
+/* Hero / Intro Section */
+#hero {
+    padding: 80px 0;
+    background: #f1f1f1;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-image {
+    flex: 1 1 500px;
+    max-width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.hero-text {
+    flex: 1 1 400px;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    color: #1a472a;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Package Overview */
+#package-overview {
+    padding: 60px 0;
+    text-align: center;
+}
+
+#package-overview h2 {
+    font-size: 36px;
+    color: #1a472a;
+    margin-bottom: 20px;
+}
+
+#package-overview p {
+    font-size: 18px;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Category Sections (Celebration, Ladies, Men’s, Uniform, Grocery, Other) */
+.category-section {
+    padding: 60px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.category-section:last-of-type {
+    border-bottom: none;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.category-header h3 {
+    font-size: 28px;
+    color: #1a472a;
+    cursor: pointer; /* indicates clickable */
+}
+
+.category-header h3:hover {
+    color: #2d5a3d;
+}
+
+.category-image {
+    max-width: 100%;
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer; /* clickable */
+}
+
+.category-image:hover {
+    opacity: 0.9;
+}
+
+.category-section p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Pricing Table */
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.pricing-table th,
+.pricing-table td {
+    border: 1px solid #ddd;
+    padding: 12px 16px;
+    text-align: center;
+}
+
+.pricing-table th {
+    background-color: #f8f9fa;
+    color: #1a472a;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.pricing-table td {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Subscription Plans */
+#subscription-plans {
+    padding: 60px 0;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+#subscription-plans h2 {
+    font-size: 36px;
+    color: #1a472a;
+    margin-bottom: 20px;
+}
+
+#subscription-plans p {
+    font-size: 18px;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
+
+.subscription-list {
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    text-align: left;
+    padding-left: 0;
+}
+
+.subscription-list li {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.subscription-list strong {
+    color: #1a472a;
+}
+
+.subscription-list em {
+    font-style: normal;
+    color: #666;
+}
+
+/* Subscription Images (small illustrative icon) */
+.subscription-images {
+    margin-bottom: 30px;
+}
+
+.subscription-images img {
+    max-width: 100px;
+    height: auto;
+}
+
+/* Military Leave Application - Optional Section */
+#leave-application {
+    padding: 60px 0;
+    text-align: center;
+}
+
+#leave-application h2 {
+    font-size: 32px;
+    color: #1a472a;
+    margin-bottom: 20px;
+}
+
+#leave-application p {
+    font-size: 16px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+}
+
+#leave-application .small-icon {
+    margin-top: 20px;
+    max-width: 80px;
+    height: auto;
+    display: inline-block;
+}
+
+/* How It Works - Optional Section */
+#how-it-works {
+    padding: 60px 0;
+    background: #f1f1f1;
+    text-align: center;
+}
+
+#how-it-works h2 {
+    font-size: 36px;
+    color: #1a472a;
+    margin-bottom: 20px;
+}
+
+.steps-list {
+    list-style: none;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    padding-left: 0;
+    text-align: left;
+}
+
+.steps-list li {
+    margin-bottom: 16px;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.steps-list strong {
+    color: #1a472a;
+}
+
+#how-it-works .how-it-works-graphic {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+/* Final Call-to-Action */
+#final-cta {
+    padding: 60px 0;
+    background: #fff;
+    text-align: center;
+}
+
+#final-cta h2 {
+    font-size: 36px;
+    color: #1a472a;
+    margin-bottom: 20px;
+}
+
+#final-cta p {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .navPage-subMenu--shop {
         grid-template-columns: 1fr;
         gap: 30px;
     }
-    
+
     .navPage-subMenu--donate {
         grid-template-columns: 1fr;
         gap: 30px;
     }
-    
+
     .sponsors-logo-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 30px;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        gap: 20px;
     }
 }
 
@@ -713,31 +1014,32 @@ body.has-activeNavPages {
     .container {
         padding: 0 15px;
     }
-    
+
+    /* Show hamburger, hide desktop menu */
     .mobileMenu-toggle {
         display: block;
     }
-    
+
     .navPages-list--desktop {
         display: none;
     }
-    
+
     .navPages-list--mobile {
         display: flex;
     }
-    
+
     .mobile-nav-top-info {
         display: block;
     }
-    
+
     .header-top-bar {
         display: none;
     }
-    
+
     .navUser-action--account-desktop {
         display: none;
     }
-    
+
     .navPages-container {
         position: fixed;
         top: 0;
@@ -751,54 +1053,134 @@ body.has-activeNavPages {
         padding-top: 80px;
         z-index: 99;
     }
-    
+
     .navPages-container.is-open {
         transform: translateX(0);
     }
-    
+
     .header-box h3 {
         font-size: 28px;
     }
-    
+
     .header-box p {
         font-size: 16px;
     }
-    
+
     .final-text {
         font-size: 16px;
     }
-    
+
     .sponsors-logo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
-    
+
     .sponsors-logo-grid div {
         height: 100px;
     }
-    
+
     .trust-company {
         padding: 60px 0;
     }
-    
+
     .navUser-section {
         gap: 10px;
     }
-    
+
     .navUser-action {
         padding: 8px;
     }
-    
+
     .donate-section {
         padding: 60px 0;
     }
-    
+
     .donate-intro h2 {
         font-size: 28px;
     }
-    
+
     .donate-card {
         padding: 30px;
+    }
+
+    #hero {
+        padding: 40px 0;
+    }
+
+    .hero-text h1 {
+        font-size: 32px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    #package-overview h2 {
+        font-size: 28px;
+    }
+
+    #package-overview p {
+        font-size: 16px;
+    }
+
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .category-header h3 {
+        font-size: 24px;
+    }
+
+    .category-image {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    #subscription-plans h2 {
+        font-size: 28px;
+    }
+
+    #subscription-plans p {
+        font-size: 16px;
+    }
+
+    .subscription-list li {
+        font-size: 16px;
+    }
+
+    .subscription-images img {
+        max-width: 80px;
+    }
+
+    #leave-application h2 {
+        font-size: 24px;
+    }
+
+    #leave-application p {
+        font-size: 14px;
+    }
+
+    #how-it-works h2 {
+        font-size: 28px;
+    }
+
+    .steps-list li {
+        font-size: 16px;
+    }
+
+    #final-cta h2 {
+        font-size: 28px;
+    }
+
+    #final-cta p {
+        font-size: 16px;
     }
 }
 
@@ -806,21 +1188,87 @@ body.has-activeNavPages {
     .header-main {
         padding: 10px 0;
     }
-    
+
     .header-logo img {
         height: 40px;
     }
-    
+
     .sponsors-logo-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .header-box h3 {
         font-size: 24px;
     }
-    
+
     .navPages-container {
         padding-top: 70px;
+    }
+
+    #hero {
+        padding: 20px 0;
+    }
+
+    .hero-text h1 {
+        font-size: 24px;
+    }
+
+    .hero-text p {
+        font-size: 14px;
+    }
+
+    #package-overview h2 {
+        font-size: 24px;
+    }
+
+    #package-overview p {
+        font-size: 14px;
+    }
+
+    .category-header h3 {
+        font-size: 20px;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    #subscription-plans h2 {
+        font-size: 24px;
+    }
+
+    #subscription-plans p {
+        font-size: 14px;
+    }
+
+    .subscription-list li {
+        font-size: 14px;
+    }
+
+    #leave-application h2 {
+        font-size: 20px;
+    }
+
+    #leave-application p {
+        font-size: 12px;
+    }
+
+    #how-it-works h2 {
+        font-size: 24px;
+    }
+
+    .steps-list li {
+        font-size: 14px;
+    }
+
+    #final-cta h2 {
+        font-size: 24px;
+    }
+
+    #final-cta p {
+        font-size: 14px;
     }
 }
 
