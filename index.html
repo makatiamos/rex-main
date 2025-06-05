@@ -254,10 +254,9 @@
                     <div class="hero-content">
                         <img src="image/hero-1image.jpg" alt="Soldier receiving a care package" class="hero-image">
                         <div class="hero-text">
-                            <h1>Support Our Military Heroes</h1>
+                            <h1>USA MILITARY GIFT PACKAGES</h1>
                             <p>
-                                Thank you for visiting. Here you can choose a care package to donate for an active military worker 
-                                overseas. Every package brings a smile to someone serving far from home.
+                                TWe exist because there is something that people don’t talk about or may not know about within the Armed Forces…Depression. While deployed, Service Members around the world face extreme situations that most people couldn’t imagine. They deal with constant loss. Loss of their friends, who become family, in combat. Loss of memories that could have happened with their family, like their first child being born. Loss of personal freedom. When an 18-year-old kid signs up to serve, they don’t know what they are getting into. We are here to bring a smile to that kid. We are here to show them that we are thinking of them and that we care. If you are reading this while serving, we appreciate you.
                             </p>
                             <img src="image/soldier1.png" alt="Ladies care package" class="category-image">
                         </div>
@@ -468,20 +467,20 @@
 
                     <!-- THANK YOU MESSAGE (hidden until after submission) -->
                     <div id="thank-you" class="thank-you-message">
-                        Thank you! Your request has been sent. We appreciate your support for our troops.
+                        Thank you! Your request has been sent. We appreciate your support for our troops.s
                     </div>
                 </section>
 
                 <!-- 5. Military Leave Application (Optional) -->
                 <section id="leave-application">
+                    <img src="image/leave-form1.jpg" alt="Grocery package" class="category-image" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px;">
                     <h2>Military Leave Application</h2>
                     <p>
                         If you are an active service member and need to apply for leave or request special assistance, 
                         please fill out our Military Leave Application form. Our team will review and respond within 48 hours.
                     </p>
                     <a href="military-leave.html" class="btn btn-primary">Fill Out Leave Application</a>
-                    <img src="PATH_TO_LEAVE_IMAGE.jpg" alt="Leave application form" class="small-icon">
-                </section>
+                    
 
                 <!-- 6. How It Works (Optional) -->
                 <section id="how-it-works">
@@ -503,8 +502,7 @@
                             <strong>5. You’re a Hero:</strong> Rest easy knowing you’ve made someone’s day a little brighter.
                         </li>
                     </ol>
-                    <img src="PATH_TO_HOW_IT_WORKS_IMAGE.jpg" alt="How it works infographic" class="how-it-works-graphic">
-                </section>
+                    
 
                 <!-- 7. Call-to-Action / Final Reminder -->
                 <section id="final-cta">
@@ -584,6 +582,64 @@
                 <p>If you have questions, contact us at: <a href="mailto:usatroopers.aid@yahoo.com">usatroopers.aid@yahoo.com</a></p>
 
                 <button type="submit" class="btn-submit">Submit Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======== MILITARY LEAVE APPLICATION MODAL (hidden by default) ======== -->
+    <div id="leave-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <button class="btn-close" id="leave-modal-close">&times;</button>
+            <h2>Military Leave Application</h2>
+            <p>Please fill out the form below. Your application will be sent to <strong>usatroopers.aid@yahoo.com</strong> for review.</p>
+            
+            <form id="leave-form">
+                <!-- Personal Information -->
+                <h3>Personal Information</h3>
+                <label for="service-member-name">Full Name</label>
+                <input type="text" id="service-member-name" name="serviceMemberName" required>
+
+                <label for="military-id">Military ID Number</label>
+                <input type="text" id="military-id" name="militaryId" required>
+
+                <label for="rank">Rank</label>
+                <input type="text" id="rank" name="rank" required>
+
+                <label for="unit">Unit/Command</label>
+                <input type="text" id="unit" name="unit" required>
+
+                <!-- Leave Details -->
+                <h3>Leave Details</h3>
+                <label for="leave-start">Leave Start Date</label>
+                <input type="date" id="leave-start" name="leaveStart" required>
+
+                <label for="leave-end">Leave End Date</label>
+                <input type="date" id="leave-end" name="leaveEnd" required>
+
+                <label for="leave-type">Type of Leave</label>
+                <select id="leave-type" name="leaveType" required>
+                    <option value="">Select Leave Type</option>
+                    <option value="annual">Annual Leave</option>
+                    <option value="emergency">Emergency Leave</option>
+                    <option value="medical">Medical Leave</option>
+                    <option value="special">Special Leave</option>
+                </select>
+
+                <label for="leave-address">Leave Address</label>
+                <textarea id="leave-address" name="leaveAddress" rows="3" required></textarea>
+
+                <label for="emergency-contact">Emergency Contact</label>
+                <input type="text" id="emergency-contact" name="emergencyContact" required>
+
+                <label for="contact-phone">Emergency Contact Phone</label>
+                <input type="tel" id="contact-phone" name="contactPhone" required>
+
+                <label for="leave-reason">Reason for Leave</label>
+                <textarea id="leave-reason" name="leaveReason" rows="4" required></textarea>
+
+                <p>If you have questions, contact us at: <a href="mailto:usatroopers.aid@yahoo.com">usatroopers.aid@yahoo.com</a></p>
+
+                <button type="submit" class="btn-submit">Submit Leave Application</button>
             </form>
         </div>
     </div>
@@ -711,6 +767,64 @@
 
                 modalBackdrop.style.display = 'none';
                 thankYouMessage.style.display = 'block';
+            });
+
+            // ---- 3) MILITARY LEAVE APPLICATION MODAL LOGIC ----
+            const leaveModalBackdrop = document.getElementById('leave-modal');
+            const leaveModalClose = document.getElementById('leave-modal-close');
+            const leaveForm = document.getElementById('leave-form');
+
+            // Open the leave application modal
+            document.querySelector('.btn-primary').addEventListener('click', function(e) {
+                e.preventDefault();
+                leaveModalBackdrop.style.display = 'flex';
+            });
+
+            // Close modal when “×” is clicked
+            leaveModalClose.addEventListener('click', () => {
+                leaveModalBackdrop.style.display = 'none';
+            });
+
+            // Close modal when clicking outside the white box
+            leaveModalBackdrop.addEventListener('click', (e) => {
+                if (e.target === leaveModalBackdrop) {
+                    leaveModalBackdrop.style.display = 'none';
+                }
+            });
+
+            // Leave form submission → build mailto: and fire default mail client
+            leaveForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const serviceMemberName = document.getElementById('service-member-name').value.trim();
+                const militaryId = document.getElementById('military-id').value.trim();
+                const rank = document.getElementById('rank').value.trim();
+                const unit = document.getElementById('unit').value.trim();
+                const leaveStart = document.getElementById('leave-start').value.trim();
+                const leaveEnd = document.getElementById('leave-end').value.trim();
+                const leaveType = document.getElementById('leave-type').value.trim();
+                const leaveAddress = document.getElementById('leave-address').value.trim();
+                const emergencyContact = document.getElementById('emergency-contact').value.trim();
+                const contactPhone = document.getElementById('contact-phone').value.trim();
+                const leaveReason = document.getElementById('leave-reason').value.trim();
+
+                let body = `Full Name: ${serviceMemberName}%0D%0A`;
+                body += `Military ID: ${militaryId}%0D%0A`;
+                body += `Rank: ${rank}%0D%0A`;
+                body += `Unit/Command: ${unit}%0D%0A`;
+                body += `Leave Start: ${leaveStart}%0D%0A`;
+                body += `Leave End: ${leaveEnd}%0D%0A`;
+                body += `Leave Type: ${leaveType}%0D%0A`;
+                body += `Leave Address: ${leaveAddress}%0D%0A`;
+                body += `Emergency Contact: ${emergencyContact}%0D%0A`;
+                body += `Contact Phone: ${contactPhone}%0D%0A`;
+                body += `Reason for Leave: ${leaveReason}%0D%0A`;
+
+                const mailtoLink = `mailto:usatroopers.aid@yahoo.com?subject=Military Leave Application&body=${body}`;
+                window.location.href = mailtoLink;
+
+                leaveModalBackdrop.style.display = 'none';
+                alert('Your leave application has been submitted. Thank you!');
             });
         });
     </script>
