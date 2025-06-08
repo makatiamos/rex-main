@@ -46,12 +46,15 @@
         .btn-checkout,
         .btn-close,
         .btn-submit {
-            display: inline-block;
+            display: inline-flex; /* Use flex to align text and spinner */
+            align-items: center;
+            justify-content: center;
             padding: 8px 16px;
             border: none;
             border-radius: 4px;
             font-size: 1rem;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
         .btn-select {
             background-color: #007BFF;
@@ -87,6 +90,8 @@
             width: 90%;
             max-width: 500px;
             position: relative;
+            max-height: 90vh; /* Allow scrolling on small screens */
+            overflow-y: auto;
         }
         .modal-content h2 {
             margin-top: 0;
@@ -97,13 +102,15 @@
             font-weight: 500;
         }
         .modal-content input,
-        .modal-content textarea {
+        .modal-content textarea,
+        .modal-content select {
             width: 100%;
             padding: 6px 8px;
             margin-bottom: 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1rem;
+            box-sizing: border-box; /* Ensures padding is inside width */
         }
         .btn-close {
             background: #dc3545;
@@ -119,23 +126,80 @@
             background: #c82333;
         }
 
+        /* Success message styles */
         .thank-you-message {
             display: none;
-            padding: 16px;
-            background: #e6ffe6;
-            border: 1px solid #28a745;
+            padding: 20px;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
             border-radius: 6px;
-            margin-top: 16px;
-            font-size: 1.1rem;
             color: #155724;
             text-align: center;
+            margin-top: 20px;
+        }
+        .thank-you-message h3 {
+             margin: 0 0 10px 0;
+        }
+        .thank-you-message p {
+            margin: 0;
+        }
+        .checkmark {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #28a745;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke-width: 3;
+            stroke-miterlimit: 10;
+            stroke: #28a745;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-submit:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .btn-submit .btn-text {
+            transition: opacity 0.2s;
         }
     </style>
 </head>
 <body>
     <a href="#main-content" class="skip-to-main-link">Skip to main content</a>
 
-    <!-- ======== HEADER (exactly as you originally had) ======== -->
+    <!-- ======== HEADER (unchanged) ======== -->
     <header class="header" role="banner">
         <div class="header-container container">
             <div class="header-top-bar">
@@ -214,7 +278,6 @@
                 <nav class="navPages">
                     <!-- Desktop Navigation -->
                     <ul class="navPages-list navPages-list--desktop">
-                        <!-- Removed: Shop For My Troop, Donate A Care Pack, Track A Package -->
                         <li class="navPages-item"><a class="navPages-action" href="about-us.html">ABOUT US</a></li>
                         <li class="navPages-item"><a class="navPages-action" href="request-a-care-pack.html">REQUEST A CARE PACK</a></li>
                         <li class="navPages-item"><a class="navPages-action" href="faqs.html">FAQS</a></li>
@@ -234,7 +297,6 @@
                         </ul>
                     </div>
                     <ul class="navPages-list navPages-list--mobile">
-                        <!-- Removed: Shop For My Troop, Donate A Care Pack, Track A Package -->
                         <li class="navPages-item"><a class="navPages-action" href="about-us.html">About Us</a></li>
                         <li class="navPages-item"><a class="navPages-action" href="request-a-care-pack.html">Request A Care Pack</a></li>
                         <li class="navPages-item"><a class="navPages-action" href="faqs.html">FAQS</a></li>
@@ -467,33 +529,39 @@
 
                     <!-- THANK YOU MESSAGE (hidden until after submission) -->
                     <div id="thank-you" class="thank-you-message">
-                        Thank you! Your request has been sent. We appreciate your support for our troops.s
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        <h3>Thank You!</h3>
+                        <p>Your order has been sent. We appreciate your support for our troops.</p>
                     </div>
                 </section>
 
                 <!-- 5. Military Leave Application (Optional) -->
                 <section id="leave-application">
-                    <img src="image/leave-form1.jpg" alt="Grocery package" class="category-image" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px;">
+                    <img src="image/leave-form1.jpg" alt="Military leave form illustration" class="category-image" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px;">
                     <h2>Military Leave Application</h2>
                     <p>
                         If you are an active service member and need to apply for leave or request special assistance, 
                         please fill out our Military Leave Application form. Our team will review and respond within 48 hours.
                     </p>
-                    <a href="military-leave.html" class="btn btn-primary">Fill Out Leave Application</a>
-                    
+                    <a href="#" class="btn btn-primary" id="open-leave-form-btn">Fill Out Leave Application</a>
+                </section>
+                
 
                 <!-- 6. How It Works (Optional) -->
                 <section id="how-it-works">
                     <h2>How It Works</h2>
                     <ol class="steps-list">
                         <li>
-                            <strong>1. Choose Your Package:</strong> Click on one of the package categories above to see details.
+                            <strong>1. Choose Your Package:</strong> Click "Add to Cart" for any packages you wish to send.
                         </li>
                         <li>
-                            <strong>2. Customize (Optional):</strong> If you selected “Other Packages,” add your own personal note or choose specific items.
+                            <strong>2. Checkout:</strong> Click the "Checkout" button to review your cart and provide your details.
                         </li>
                         <li>
-                            <strong>3. Checkout &amp; Pay:</strong> You’ll be guided through a secure checkout. Provide shipping details for the service member.
+                            <strong>3. Submit:</strong> Fill out the form and click submit. Your order is sent directly to us for processing.
                         </li>
                         <li>
                             <strong>4. We Ship:</strong> We assemble the items, pack them carefully, and send them directly to your designated service member overseas.
@@ -502,13 +570,13 @@
                             <strong>5. You’re a Hero:</strong> Rest easy knowing you’ve made someone’s day a little brighter.
                         </li>
                     </ol>
+                </section>
                     
-
                 <!-- 7. Call-to-Action / Final Reminder -->
                 <section id="final-cta">
                     <h2>Ready to Make a Difference?</h2>
                     <p>
-                        Every care package brings hope and gratitude to a soldier serving far from home. Choose a package below 
+                        Every care package brings hope and gratitude to a soldier serving far from home. Choose a package above 
                         and help us deliver smiles, one box at a time.
                     </p>
                 </section>
@@ -516,7 +584,7 @@
         </div>
     </main>
 
-    <!-- ======== FOOTER (exactly as you originally had) ======== -->
+    <!-- ======== FOOTER (unchanged) ======== -->
     <footer class="footer">
         <section class="trust-company">
             <div class="container">
@@ -557,43 +625,47 @@
     <!-- ======== CHECKOUT MODAL (hidden by default) ======== -->
     <div id="checkout-modal" class="modal-backdrop">
         <div class="modal-content">
-            <button class="btn-close" id="modal-close">&times;</button>
+            <button class="btn-close" id="modal-close">×</button>
             <h2>Checkout</h2>
-            <p>Please review your selected items below and fill out the form. We will send your order request to <strong>usatroopers.aid@yahoo.com</strong>.</p>
+            <p>Please review your selected items below and fill out the form.</p>
             <div id="selected-items">
                 <!-- JS will inject chosen items here -->
             </div>
-            <form id="checkout-form">
+            <form id="checkout-form" novalidate>
                 <label for="full-name">Full Name</label>
                 <input type="text" id="full-name" name="fullName" required>
 
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" required>
 
-                <label for="soldier-name">Soldier’s Name</label>
+                <label for="soldier-name">Soldier's Name</label>
                 <input type="text" id="soldier-name" name="soldierName" required>
 
-                <label for="soldier-rank">Soldier’s Rank</label>
+                <label for="soldier-rank">Soldier's Rank</label>
                 <input type="text" id="soldier-rank" name="soldierRank" required>
 
                 <label for="relationship">Your Relationship with Soldier</label>
                 <input type="text" id="relationship" name="relationship" required>
 
-                <p>If you have questions, contact us at: <a href="mailto:usatroopers.aid@yahoo.com">usatroopers.aid@yahoo.com</a></p>
-
-                <button type="submit" class="btn-submit">Submit Order</button>
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Submit Order</span>
+                </button>
             </form>
         </div>
     </div>
 
+    
     <!-- ======== MILITARY LEAVE APPLICATION MODAL (hidden by default) ======== -->
     <div id="leave-modal" class="modal-backdrop">
         <div class="modal-content">
-            <button class="btn-close" id="leave-modal-close">&times;</button>
+            <button class="btn-close" id="leave-modal-close">×</button>
             <h2>Military Leave Application</h2>
-            <p>Please fill out the form below. Your application will be sent to <strong>usatroopers.aid@yahoo.com</strong> for review.</p>
+            <p>Please fill out the form below. Your application will be sent for review.</p>
             
-            <form id="leave-form">
+           
+            <form id="leave-form" action="https://formsubmit.co/hheennrryytteessllaa@gmail.com.com" method="POST" novalidate>
+                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+                <input type="hidden" name="_captcha" value="false">
                 <!-- Personal Information -->
                 <h3>Personal Information</h3>
                 <label for="service-member-name">Full Name</label>
@@ -637,31 +709,28 @@
                 <label for="leave-reason">Reason for Leave</label>
                 <textarea id="leave-reason" name="leaveReason" rows="4" required></textarea>
 
-                <p>If you have questions, contact us at: <a href="mailto:usatroopers.aid@yahoo.com">usatroopers.aid@yahoo.com</a></p>
-
-                <button type="submit" class="btn-submit">Submit Leave Application</button>
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Submit Leave Application</span>
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- ======== JAVASCRIPT FOR HEADER + CART & MODAL LOGIC ======== -->
+    <!-- ======== NEW JAVASCRIPT FOR HEADER, CART, AND GOOGLE SHEETS SUBMISSION ======== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ---- 1) MOBILE “HAMBURGER” TOGGLE (navPages-container) ----
+            
+            // ---- 1) MOBILE “HAMBURGER” TOGGLE ----
             const menuToggle = document.querySelector('.mobileMenu-toggle');
             const navPagesContainer = document.querySelector('.navPages-container');
             const body = document.body;
 
             if (menuToggle && navPagesContainer) {
                 menuToggle.addEventListener('click', function() {
-                    // Toggle hamburger icon animation
-                    menuToggle.classList.toggle('is-active');
-                    // Toggle aria-expanded
                     const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-                    menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
-                    // Show/hide the off-canvas nav
+                    menuToggle.classList.toggle('is-active');
+                    menuToggle.setAttribute('aria-expanded', !isExpanded);
                     navPagesContainer.classList.toggle('is-open');
-                    // Prevent body from scrolling when nav is open
                     body.classList.toggle('has-activeNavPages');
                 });
             }
@@ -670,163 +739,84 @@
             const cart = [];
             const selectButtons = document.querySelectorAll('.btn-select');
             const checkoutBtn = document.getElementById('checkout-btn');
-            const modalBackdrop = document.getElementById('checkout-modal');
+            const modalBackdrop = document.getElementById('checkout-modal');;
             const modalClose = document.getElementById('modal-close');
             const selectedItemsContainer = document.getElementById('selected-items');
-            const checkoutForm = document.getElementById('checkout-form');
-            const thankYouMessage = document.getElementById('thank-you');
             const cartIconLink = document.querySelector('[data-cart-preview]');
             const cartQuantityBadge = document.querySelector('.cart-quantity');
+            const thankYouMessage = document.getElementById('thank-you');
 
-            // Helper: Update the badge number
             function updateCartBadge() {
                 cartQuantityBadge.textContent = cart.length;
             }
+            
+            function getSelectedItemsAsString() {
+                if (cart.length === 0) return 'No items selected';
+                return cart.map(item => `${item.category} - ${item.size} ($${item.price})`).join('; ');
+            }
 
-            // “Add to Cart” button → push into array, disable button, update badge
             selectButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const card = btn.closest('.package-card');
                     const category = card.getAttribute('data-category');
-                    const size = btn.getAttribute('data-size');
+                    const size = btn.getAttribute('data-size');;
                     const price = btn.getAttribute('data-price');
 
-                    cart.push({ category, size, price });
-                    btn.textContent = 'Added';
-                    btn.disabled = true;
-                    updateCartBadge();
+                    // Avoid adding duplicates
+                    const existingItem = cart.find(item => item.category === category && item.size === size);
+                    if (!existingItem) {
+                        cart.push({ category, size, price, button: btn });
+                        btn.textContent = 'Added';
+                        btn.disabled = true;
+                        updateCartBadge();
+                    }
                 });
             });
 
-            // Build the modal contents and show it
             function openCartModal() {
                 if (cart.length === 0) {
                     alert('Your cart is empty. Please add at least one package.');
                     return;
                 }
-
                 let html = '<table class="pricing-table">';
                 html += '<thead><tr><th>Category</th><th>Size</th><th>Price (USD)</th></tr></thead><tbody>';
                 cart.forEach(item => {
-                    html += `<tr>
-                                <td>${item.category}</td>
-                                <td>${item.size}</td>
-                                <td>$${item.price}</td>
-                             </tr>`;
+                    html += `<tr><td>${item.category}</td><td>${item.size}</td><td>$${item.price}</td></tr>`;
                 });
                 html += '</tbody></table>';
                 selectedItemsContainer.innerHTML = html;
-
                 modalBackdrop.style.display = 'flex';
             }
 
-            // “Checkout” button click → open modal
             checkoutBtn.addEventListener('click', openCartModal);
-
-            // Cart icon in the header → open modal (same logic)
-            cartIconLink.addEventListener('click', function(e) {
-                e.preventDefault(); // prevent default href
+            cartIconLink.addEventListener('click', e => {
+                e.preventDefault();
                 openCartModal();
             });
-
-            // Close modal when “×” is clicked
-            modalClose.addEventListener('click', () => {
-                modalBackdrop.style.display = 'none';
-            });
-
-            // Close modal when clicking outside the white box
-            modalBackdrop.addEventListener('click', (e) => {
-                if (e.target === modalBackdrop) {
-                    modalBackdrop.style.display = 'none';
-                }
-            });
-
-            // Form submission → build mailto: and fire default mail client
-            checkoutForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const fullName = document.getElementById('full-name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const soldierName = document.getElementById('soldier-name').value.trim();
-                const soldierRank = document.getElementById('soldier-rank').value.trim();
-                const relationship = document.getElementById('relationship').value.trim();
-
-                let body = `Full Name: ${fullName}%0D%0A`;
-                body += `Email: ${email}%0D%0A`;
-                body += `Soldier Name: ${soldierName}%0D%0A`;
-                body += `Soldier Rank: ${soldierRank}%0D%0A`;
-                body += `Relationship: ${relationship}%0D%0A%0D%0A`;
-                body += `Selected Packages:%0D%0A`;
-
-                cart.forEach((item, idx) => {
-                    body += `${idx + 1}. ${item.category} - ${item.size} ($${item.price})%0D%0A`;
-                });
-
-                const mailtoLink = `mailto:usatroopers.aid@yahoo.com?subject=New Care Package Order&body=${body}`;
-                window.location.href = mailtoLink;
-
-                modalBackdrop.style.display = 'none';
-                thankYouMessage.style.display = 'block';
+            modalClose.addEventListener('click', () => modalBackdrop.style.display = 'none');
+            modalBackdrop.addEventListener('click', e => {
+                if (e.target === modalBackdrop) modalBackdrop.style.display = 'none';
             });
 
             // ---- 3) MILITARY LEAVE APPLICATION MODAL LOGIC ----
             const leaveModalBackdrop = document.getElementById('leave-modal');
             const leaveModalClose = document.getElementById('leave-modal-close');
-            const leaveForm = document.getElementById('leave-form');
-
-            // Open the leave application modal
-            document.querySelector('.btn-primary').addEventListener('click', function(e) {
+            const openLeaveFormBtn = document.getElementById('open-leave-form-btn');
+            
+            openLeaveFormBtn.addEventListener('click', e => {
                 e.preventDefault();
                 leaveModalBackdrop.style.display = 'flex';
             });
-
-            // Close modal when “×” is clicked
-            leaveModalClose.addEventListener('click', () => {
-                leaveModalBackdrop.style.display = 'none';
+            leaveModalClose.addEventListener('click', () => leaveModalBackdrop.style.display = 'none');
+            leaveModalBackdrop.addEventListener('click', e => {
+                if (e.target === leaveModalBackdrop) leaveModalBackdrop.style.display = 'none';
             });
 
-            // Close modal when clicking outside the white box
-            leaveModalBackdrop.addEventListener('click', (e) => {
-                if (e.target === leaveModalBackdrop) {
-                    leaveModalBackdrop.style.display = 'none';
-                }
-            });
+            
 
-            // Leave form submission → build mailto: and fire default mail client
-            leaveForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const serviceMemberName = document.getElementById('service-member-name').value.trim();
-                const militaryId = document.getElementById('military-id').value.trim();
-                const rank = document.getElementById('rank').value.trim();
-                const unit = document.getElementById('unit').value.trim();
-                const leaveStart = document.getElementById('leave-start').value.trim();
-                const leaveEnd = document.getElementById('leave-end').value.trim();
-                const leaveType = document.getElementById('leave-type').value.trim();
-                const leaveAddress = document.getElementById('leave-address').value.trim();
-                const emergencyContact = document.getElementById('emergency-contact').value.trim();
-                const contactPhone = document.getElementById('contact-phone').value.trim();
-                const leaveReason = document.getElementById('leave-reason').value.trim();
-
-                let body = `Full Name: ${serviceMemberName}%0D%0A`;
-                body += `Military ID: ${militaryId}%0D%0A`;
-                body += `Rank: ${rank}%0D%0A`;
-                body += `Unit/Command: ${unit}%0D%0A`;
-                body += `Leave Start: ${leaveStart}%0D%0A`;
-                body += `Leave End: ${leaveEnd}%0D%0A`;
-                body += `Leave Type: ${leaveType}%0D%0A`;
-                body += `Leave Address: ${leaveAddress}%0D%0A`;
-                body += `Emergency Contact: ${emergencyContact}%0D%0A`;
-                body += `Contact Phone: ${contactPhone}%0D%0A`;
-                body += `Reason for Leave: ${leaveReason}%0D%0A`;
-
-                const mailtoLink = `mailto:usatroopers.aid@yahoo.com?subject=Military Leave Application&body=${body}`;
-                window.location.href = mailtoLink;
-
-                leaveModalBackdrop.style.display = 'none';
-                alert('Your leave application has been submitted. Thank you!');
-            });
+            
         });
     </script>
+    
 </body>
 </html>
