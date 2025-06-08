@@ -1133,6 +1133,62 @@ body.has-activeNavPages {
     font-weight: 600;
 }
 
+/* Add these styles to your existing CSS */
+
+.form-success-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.success-content {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.success-content h3 {
+    color: #1a472a;
+    font-size: 24px;
+    margin: 20px 0 10px;
+}
+
+.success-content p {
+    color: #666;
+    font-size: 16px;
+}
+
+/* Checkmark animation */
+.checkmark {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke: #1a472a;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: #1a472a;
+    stroke-width: 3;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .navPage-subMenu--shop {
