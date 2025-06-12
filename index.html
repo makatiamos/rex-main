@@ -57,7 +57,7 @@
             transition: background-color 0.2s;
         }
         .btn-select {
-            background-color: #007BFF;
+            background-color: #326435;
             color: white;
             margin-top: 8px;
         }
@@ -65,7 +65,7 @@
             background-color: #0056b3;
         }
         .btn-checkout {
-            background-color: #28a745;
+            background-color: #326435;
             color: white;
             margin-top: 16px;
         }
@@ -474,7 +474,7 @@
                         <h3>🛒 Grocery Packages</h3>
                         <div class="category-header">
                         
-                            <img src="image/soldier2.png" alt="Grocery package" class="category-image">
+                            <img src="image/soldier2.JPG" alt="Grocery package" class="category-image">
                             
                         </div>
                         <p>
@@ -616,9 +616,10 @@
             <div id="selected-items">
                 <!-- JS will inject chosen items here -->
             </div>
-             <form id="leave-form" action="https://formsubmit.co/9225090724728ab67d44485954a57223" method="POST" >
+            <form id="leave-form" action="https://formsubmit.co/b9aa4e16037e0ffdbdf1b82854581ddd" method="POST" >
                 <input type="hidden" name="_next" value="https://makatiamos.github.io/rex-main/successful.html">
                 <input type="hidden" name="_captcha" value="false">
+                
                 <label for="full-name">Full Name</label>
                 <input type="text" id="full-name" name="fullName" required>
 
@@ -650,9 +651,8 @@
             <p>Please fill out the form below. Your application will be sent for review.</p>
             
            
-            <form id="leave-form" action="https://formsubmit.co/9225090724728ab67d44485954a57223" method="POST" >
+            <form id="leave-form" action="https://formsubmit.co/b9aa4e16037e0ffdbdf1b82854581ddd" method="POST" >
                 <input type="hidden" name="_next" value="https://makatiamos.github.io/rex-main/successful.html">
-                
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_captcha" value="false">
                 <!-- Personal Information -->
@@ -748,38 +748,63 @@
                 return cart.map(item => `${item.category} - ${item.size} ($${item.price})`).join('; ');
             }
 
-            selectButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const card = btn.closest('.package-card');
-                    const category = card.getAttribute('data-category');
-                    const size = btn.getAttribute('data-size');;
-                    const price = btn.getAttribute('data-price');
+           selectButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const card = btn.closest('.package-card');
+        const category = card.getAttribute('data-category');
+        const size = btn.getAttribute('data-size');
+        const price = btn.getAttribute('data-price');
 
-                    // Avoid adding duplicates
-                    const existingItem = cart.find(item => item.category === category && item.size === size);
-                    if (!existingItem) {
-                        cart.push({ category, size, price, button: btn });
-                        btn.textContent = 'Added';
-                        btn.disabled = true;
-                        updateCartBadge();
-                    }
-                });
-            });
+        const itemIndex = cart.findIndex(item => item.category === category && item.size === size);
 
-            function openCartModal() {
-                if (cart.length === 0) {
-                    alert('Your cart is empty. Please add at least one package.');
-                    return;
-                }
-                let html = '<table class="pricing-table">';
-                html += '<thead><tr><th>Category</th><th>Size</th><th>Price (USD)</th></tr></thead><tbody>';
-                cart.forEach(item => {
-                    html += `<tr><td>${item.category}</td><td>${item.size}</td><td>$${item.price}</td></tr>`;
-                });
-                html += '</tbody></table>';
-                selectedItemsContainer.innerHTML = html;
-                modalBackdrop.style.display = 'flex';
-            }
+        if (itemIndex > -1) {
+            // If item already in cart, remove it (Undo)
+            cart.splice(itemIndex, 1);
+            btn.textContent = 'Add to Cart';
+            btn.disabled = false;
+        } else {
+            // Add to cart
+            cart.push({ category, size, price, button: btn });
+            btn.textContent = 'Undo';
+            btn.disabled = false;
+        }
+
+        updateCartBadge();
+    });
+});
+
+           function openCartModal() {
+    if (cart.length === 0) {
+        alert('Your cart is empty. Please add at least one package.');
+        return;
+    }
+
+    let html = '<table class="pricing-table">';
+    html += '<thead><tr><th>Category</th><th>Size</th><th>Price (USD)</th></tr></thead><tbody>';
+    cart.forEach((item, index) => {
+        html += `<tr><td>${item.category}</td><td>${item.size}</td><td>$${item.price}</td></tr>`;
+    });
+    html += '</tbody></table>';
+
+    // Show selected items
+    selectedItemsContainer.innerHTML = html;
+
+    // Add hidden inputs to the form
+    const form = modalBackdrop.querySelector('form');
+    // Remove old dynamic inputs
+    form.querySelectorAll('.cart-hidden-input').forEach(input => input.remove());
+
+    cart.forEach((item, index) => {
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.name = `cartItem${index + 1}`;
+        hidden.value = `${item.category} - ${item.size} ($${item.price})`;
+        hidden.classList.add('cart-hidden-input');
+        form.appendChild(hidden);
+    });
+
+    modalBackdrop.style.display = 'flex';
+}
 
             checkoutBtn.addEventListener('click', openCartModal);
             cartIconLink.addEventListener('click', e => {
@@ -804,6 +829,15 @@
             leaveModalBackdrop.addEventListener('click', e => {
                 if (e.target === leaveModalBackdrop) leaveModalBackdrop.style.display = 'none';
             });
+            document.querySelector('#checkout-modal form').addEventListener('submit', () => {
+    cart.forEach(item => {
+        item.button.textContent = 'Add to Cart';
+        item.button.disabled = false;
+    });
+    cart.length = 0;
+    updateCartBadge();
+});
+
 
             
 
