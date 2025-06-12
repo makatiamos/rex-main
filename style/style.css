@@ -430,6 +430,22 @@ body.has-activeNavPages {
     box-shadow: 0 5px 15px rgba(26, 71, 42, 0.3);
 }
 
+/* Select Button */
+.btn-select {
+    background-color: #333;
+    color: white;
+    margin-top: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-select:hover {
+    background-color: #444;  /* slightly lighter for hover state */
+}
+
+.btn-select:disabled {
+    background-color: #666;  /* lighter gray when disabled */
+}
+
 /* Search Dropdown */
 .dropdown--quickSearch {
     position: absolute;
